@@ -52,6 +52,12 @@ function parseArguments(input: string): string[] {
   return result
 }
 
+function formatArguments(args: string[]): string {
+  return args
+    .map((arg) => (arg.includes(" ") ? `"${arg}"` : arg))
+    .join(" ")
+}
+
 function emptyConfig(): PlistConfig {
   return {
     label: "",
@@ -121,7 +127,9 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
     editingJob?.plist ?? emptyConfig()
   )
   const [args, setArgs] = useState(
-    editingJob?.plist.program_arguments?.join(" ") ?? ""
+    editingJob?.plist.program_arguments
+      ? formatArguments(editingJob.plist.program_arguments)
+      : ""
   )
   const [scheduleType, setScheduleType] = useState<ScheduleType>(
     detectScheduleType(editingJob?.plist ?? emptyConfig())
