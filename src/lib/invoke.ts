@@ -47,5 +47,7 @@ export const clearLogFile = (path: string) =>
 export const openLogInEditor = (path: string) =>
   invoke<void>("open_log_in_editor", { path })
 
+export const getHomeDir = () => invoke<string>("get_home_dir")
+
 export const revealInFinder = (path: string) =>
   invoke<void>("reveal_in_finder", { path })

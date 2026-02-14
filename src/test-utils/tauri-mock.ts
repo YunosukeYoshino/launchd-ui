@@ -82,6 +82,7 @@ const handlers: Record<string, CommandHandler> = {
   save_job: () => undefined,
   create_job: () => "/Users/test/Library/LaunchAgents/new-job.plist",
   delete_job: () => undefined,
+  get_home_dir: () => "/Users/test",
   clear_log_file: () => undefined,
   read_log_file: () => ({
     content: "2024-01-01 12:00:00 INFO Started\n2024-01-01 12:00:01 INFO Running\n",

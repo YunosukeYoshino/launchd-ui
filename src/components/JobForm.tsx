@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import type { PlistConfig, LaunchdJob, CalendarInterval } from "@/types"
+import { getHomeDir } from "@/lib/invoke"
 
 type JobFormProps = {
   open: boolean
@@ -145,8 +146,15 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
   )
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [homeDir, setHomeDir] = useState<string | null>(null)
 
   const isEditing = !!editingJob
+
+  useEffect(() => {
+    if (!isEditing) {
+      getHomeDir().then(setHomeDir).catch(() => {})
+    }
+  }, [isEditing])
 
   const handleSave = async () => {
     setError(null)
@@ -196,7 +204,16 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               id="label"
               placeholder="com.example.my-agent"
               value={config.label}
-              onChange={(e) => setConfig({ ...config, label: e.target.value })}
+              onChange={(e) => {
+                const label = e.target.value
+                const updates: Partial<PlistConfig> = { label }
+                if (!isEditing && homeDir && label.trim()) {
+                  const logDir = `${homeDir}/Library/Logs/launchd-ui`
+                  updates.standard_out_path = `${logDir}/${label}.stdout.log`
+                  updates.standard_error_path = `${logDir}/${label}.stderr.log`
+                }
+                setConfig({ ...config, ...updates })
+              }}
               disabled={isEditing}
             />
             <p className="text-xs text-muted-foreground">

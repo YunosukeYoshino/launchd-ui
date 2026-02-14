@@ -152,6 +152,17 @@ pub async fn create_job(label: String, config: PlistConfig) -> Result<String, Ap
     if !agents_dir.exists() {
         std::fs::create_dir_all(&agents_dir)?;
     }
+    // Create log directories if log paths are set
+    for log_path in [&config.standard_out_path, &config.standard_error_path]
+        .into_iter()
+        .flatten()
+    {
+        if let Some(parent) = std::path::Path::new(log_path).parent() {
+            if !parent.exists() {
+                std::fs::create_dir_all(parent)?;
+            }
+        }
+    }
     let path = agents_dir.join(format!("{label}.plist"));
     let path_str = path
         .to_str()
@@ -240,6 +251,13 @@ pub async fn open_log_in_editor(path: String) -> Result<(), AppError> {
         .arg(&path)
         .spawn()?;
     Ok(())
+}
+
+#[tauri::command]
+pub async fn get_home_dir() -> Result<String, AppError> {
+    dirs::home_dir()
+        .and_then(|p| p.to_str().map(String::from))
+        .ok_or_else(|| AppError::Launchctl("could not determine home directory".to_string()))
 }
 
 #[tauri::command]

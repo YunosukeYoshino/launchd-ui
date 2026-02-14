@@ -23,6 +23,7 @@ pub fn run() {
             commands::read_log_file,
             commands::clear_log_file,
             commands::open_log_in_editor,
+            commands::get_home_dir,
             commands::reveal_in_finder,
         ])
         .run(tauri::generate_context!())
