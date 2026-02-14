@@ -21,19 +21,18 @@ System Agents and Daemons are read-only. Modification operations are limited to 
 
 ## Install
 
-This app is not code-signed. Use the following commands to download and install:
+This app is not code-signed. Download and install via CLI:
 
 ```bash
-# Download the latest DMG (Apple Silicon)
-curl -L -o /tmp/launchd-ui.dmg "https://github.com/azu/launchd-ui/releases/latest/download/launchd-ui_aarch64.dmg"
-# Mount, copy, unmount
-hdiutil attach /tmp/launchd-ui.dmg -mountpoint /tmp/launchd-ui-mount
-cp -R /tmp/launchd-ui-mount/launchd-ui.app /Applications/
-hdiutil detach /tmp/launchd-ui-mount
-rm /tmp/launchd-ui.dmg
+# Download and extract (Apple Silicon)
+curl -L "https://github.com/azu/launchd-ui/releases/latest/download/launchd-ui_aarch64.app.tar.gz" | tar xz -C /Applications
 # Remove quarantine attribute (required for unsigned apps)
 xattr -cr /Applications/launchd-ui.app
 ```
+
+For Intel Macs, replace `aarch64` with `x64`.
+
+DMG installers are also available on the [Releases](https://github.com/azu/launchd-ui/releases) page.
 
 ## Tech Stack
 
