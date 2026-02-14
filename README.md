@@ -42,11 +42,17 @@ cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings  # Rust lint
 
 ## Install
 
-Download the DMG from [Releases](https://github.com/azu/launchd-ui/releases).
-
-This app is not code-signed. To open an unsigned app on macOS, remove the quarantine attribute:
+This app is not code-signed. Use the following commands to download and install:
 
 ```bash
+# Download the latest DMG (Apple Silicon)
+curl -L -o /tmp/launchd-ui.dmg "https://github.com/azu/launchd-ui/releases/latest/download/launchd-ui_aarch64.dmg"
+# Mount, copy, unmount
+hdiutil attach /tmp/launchd-ui.dmg -mountpoint /tmp/launchd-ui-mount
+cp -R /tmp/launchd-ui-mount/launchd-ui.app /Applications/
+hdiutil detach /tmp/launchd-ui-mount
+rm /tmp/launchd-ui.dmg
+# Remove quarantine attribute (required for unsigned apps)
 xattr -cr /Applications/launchd-ui.app
 ```
 
