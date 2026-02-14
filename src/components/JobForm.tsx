@@ -205,7 +205,7 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               placeholder="com.example.my-agent"
               value={config.label}
               onChange={(e) => {
-                const label = e.target.value
+                const label = e.target.value.replace(/\s/g, "")
                 const updates: Partial<PlistConfig> = { label }
                 if (!isEditing && homeDir && label.trim()) {
                   const logDir = `${homeDir}/Library/Logs/launchd-ui`
@@ -215,6 +215,8 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
                 setConfig({ ...config, ...updates })
               }}
               disabled={isEditing}
+              spellCheck={false}
+              autoCorrect="off"
             />
             <p className="text-xs text-muted-foreground">
               Unique identifier for this agent. Use reverse domain notation (e.g. com.yourname.task).
@@ -230,6 +232,8 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               placeholder="/usr/bin/my-program --flag value"
               value={args}
               onChange={(e) => setArgs(e.target.value)}
+              spellCheck={false}
+              autoCorrect="off"
             />
             <p className="text-xs text-muted-foreground">
               The command to execute, followed by its arguments. Space-separated. Use quotes for arguments containing spaces (e.g. /usr/bin/cmd "arg with spaces").
@@ -459,6 +463,8 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               onChange={(e) =>
                 setConfig({ ...config, working_directory: e.target.value })
               }
+              spellCheck={false}
+              autoCorrect="off"
             />
             <p className="text-xs text-muted-foreground">
               Directory to use as the current working directory when running the command.
@@ -476,6 +482,8 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               onChange={(e) =>
                 setConfig({ ...config, standard_out_path: e.target.value })
               }
+              spellCheck={false}
+              autoCorrect="off"
             />
             <p className="text-xs text-muted-foreground">
               File path to write the command's standard output. Useful for checking execution results.
@@ -493,6 +501,8 @@ export function JobForm({ open, onClose, onSave, editingJob }: JobFormProps) {
               onChange={(e) =>
                 setConfig({ ...config, standard_error_path: e.target.value })
               }
+              spellCheck={false}
+              autoCorrect="off"
             />
             <p className="text-xs text-muted-foreground">
               File path to write the command's error output. Useful for debugging failures.
