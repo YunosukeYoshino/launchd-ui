@@ -196,9 +196,7 @@ pub async fn read_log_file(
         .modified()
         .ok()
         .and_then(|t| {
-            let duration = t
-                .duration_since(std::time::UNIX_EPOCH)
-                .ok()?;
+            let duration = t.duration_since(std::time::UNIX_EPOCH).ok()?;
             Some(duration.as_secs())
         })
         .map(|secs| {
