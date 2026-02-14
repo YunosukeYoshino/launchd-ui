@@ -40,6 +40,16 @@ cargo fmt --manifest-path src-tauri/Cargo.toml --check   # Rust format check
 cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings  # Rust lint
 ```
 
+## Install
+
+Download the DMG from [Releases](https://github.com/azu/launchd-ui/releases).
+
+This app is not code-signed. To open an unsigned app on macOS, remove the quarantine attribute:
+
+```bash
+xattr -cr /Applications/launchd-ui.app
+```
+
 ## License
 
 MIT
