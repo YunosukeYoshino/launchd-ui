@@ -1,5 +1,19 @@
-import { invoke } from "@tauri-apps/api/core"
 import type { JobListEntry, LaunchdJob, PlistConfig } from "@/types"
+
+const isTauri = () =>
+  typeof window !== "undefined" && "__TAURI_INTERNALS__" in window
+
+async function invoke<T>(
+  command: string,
+  args?: Record<string, unknown>
+): Promise<T> {
+  if (isTauri()) {
+    const { invoke: tauriInvoke } = await import("@tauri-apps/api/core")
+    return tauriInvoke<T>(command, args)
+  }
+  const { invoke: mockInvoke } = await import("@/test-utils/tauri-mock")
+  return mockInvoke<T>(command, args)
+}
 
 export const listJobs = () => invoke<JobListEntry[]>("list_jobs")
 

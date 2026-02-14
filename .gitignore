@@ -33,3 +33,6 @@ Thumbs.db
 *.local
 .env
 .env.local
+
+## plist
+plists
