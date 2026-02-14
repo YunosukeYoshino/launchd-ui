@@ -23,6 +23,10 @@ macOS launchd エージェント/デーモン管理GUI（Tauri v2）
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check` — Rust format check
 - `cargo clippy --manifest-path src-tauri/Cargo.toml -- -D warnings` — Rust lint
 
+- `pnpm version:patch` — Bump patch version, commit, and create git tag
+- `pnpm version:minor` — Bump minor version, commit, and create git tag
+- `pnpm version:major` — Bump major version, commit, and create git tag
+
 Note: `cargo tauri` is not available. Use `pnpm tauri` or `pnpm exec tauri` instead.
 
 ## Project Structure
