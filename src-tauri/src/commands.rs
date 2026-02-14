@@ -225,6 +225,15 @@ pub async fn read_log_file(
 }
 
 #[tauri::command]
+pub async fn clear_log_file(path: String) -> Result<(), AppError> {
+    if !std::path::Path::new(&path).exists() {
+        return Err(AppError::NotFound(format!("log file not found: {path}")));
+    }
+    std::fs::write(&path, "")?;
+    Ok(())
+}
+
+#[tauri::command]
 pub async fn open_log_in_editor(path: String) -> Result<(), AppError> {
     std::process::Command::new("open")
         .arg("-t")

@@ -41,6 +41,9 @@ export type LogFileResult = {
 export const readLogFile = (path: string, tailLines?: number) =>
   invoke<LogFileResult>("read_log_file", { path, tailLines })
 
+export const clearLogFile = (path: string) =>
+  invoke<void>("clear_log_file", { path })
+
 export const openLogInEditor = (path: string) =>
   invoke<void>("open_log_in_editor", { path })
 

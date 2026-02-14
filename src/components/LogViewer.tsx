@@ -2,8 +2,8 @@ import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useLogs } from "@/hooks/useLogs"
-import { openLogInEditor } from "@/lib/invoke"
-import { ExternalLink, RefreshCw } from "lucide-react"
+import { clearLogFile, openLogInEditor } from "@/lib/invoke"
+import { ExternalLink, RefreshCw, Trash2 } from "lucide-react"
 
 type LogViewerProps = {
   logPath: string | null
@@ -58,6 +58,17 @@ export function LogViewer({ logPath, tailLines = 200 }: LogViewerProps) {
           >
             <RefreshCw className={`h-3 w-3 mr-1 ${loading ? "animate-spin" : ""}`} />
             Refresh
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={async () => {
+              await clearLogFile(logPath)
+              fetchLog(logPath, tailLines)
+            }}
+          >
+            <Trash2 className="h-3 w-3 mr-1" />
+            Clear
           </Button>
           <Button
             variant="ghost"

@@ -21,6 +21,7 @@ pub fn run() {
             commands::create_job,
             commands::delete_job,
             commands::read_log_file,
+            commands::clear_log_file,
             commands::open_log_in_editor,
             commands::reveal_in_finder,
         ])

@@ -45,3 +45,4 @@ Note: `cargo tauri` is not available. Use `pnpm tauri` or `pnpm exec tauri` inst
 - TypeScript: use `type` not `interface`
 - User agents directory: `~/Library/LaunchAgents/`
 - System agents/daemons are read-only in the UI
+- Project language is English (README, commit messages, code comments)
